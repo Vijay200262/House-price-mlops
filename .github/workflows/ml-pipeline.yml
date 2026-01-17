@@ -1,0 +1,37 @@
+name: ML CI/CD PIPELINE
+
+on:
+    push:
+        branches: [ main ]
+    pull-request:
+        branches: [ main ]
+
+jobs:
+    ml-pipeline:
+        runs-on: ubuntu -latest
+
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v4
+
+            - name: Setup Python
+              uses: actions/setup-python@v5
+
+              with: 
+                python-version: "3.10"
+            - name: Install Dependencies
+              run: |
+                pip install --upgrade pip
+                pip install -r requirements.txt
+
+            - name: Run Unit Tests
+              run: pytest -v
+            
+            - name: Evaluate Model
+              run: python src/evaluate.py
+
+            - name: Upload Model Artifact
+              uses: actions/upload-artifact@v4
+              with:
+               name: trained-Model
+               path: models/model.pkl
