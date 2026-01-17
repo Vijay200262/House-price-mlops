@@ -3,12 +3,12 @@ name: ML CI/CD PIPELINE
 on:
     push:
         branches: [ main ]
-    pull-request:
+    pull_request:
         branches: [ main ]
 
 jobs:
     ml-pipeline:
-        runs-on: ubuntu -latest
+        runs-on: ubuntu-latest
 
         steps:
             - name: Checkout Code
@@ -33,5 +33,5 @@ jobs:
             - name: Upload Model Artifact
               uses: actions/upload-artifact@v4
               with:
-               name: trained-Model
+               name: Trained-Model
                path: models/model.pkl
